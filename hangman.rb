@@ -86,14 +86,14 @@ def select_word
 
   word = ""
   loop do
-    randomise = rand(60000)
-    word = File.open("desk.txt", "r").readlines[randomise]
-    break if word.length > 5 and word.length < 13
+    randomise = rand(60000)# selects a random number between 0 and 60000
+    word = File.open("desk.txt", "r").readlines[randomise]# to obtain a single line since readlines produces an array of lines
+    break if word.length > 5 and word.length < 13 # the length of the selected word must be above 5 and below 13 if not selected another word
   end
   return word.downcase.strip
 end 
 
-def initialize_correctness(secrete_word)
+def initialize_correctness(secrete_word)# creates "_ _ _ _ _" based on the length of the secrete word
   return "_" *secrete_word.length
 end
 
@@ -109,7 +109,7 @@ def match_guess_and_secrete_word(guess, secrete_word, correctness)
   for i in 0..length
 
     if correctness[i] == "_" and secrete_word[i] == guess   
-      correctness[i] = guess
+      correctness[i] = guess # adds guess word to "_ _ _ _ _" if the space has not yet been occupied
       break 
     end
 
@@ -132,9 +132,9 @@ def save_game?(secrete_word, count, correctness, player)
     session_name = gets.chomp
     puts "Game saving............................."
     save_obj = GameSave.new(secrete_word, count, correctness, player.name, session_name)
-    save_data = save_obj.to_json
+    save_data = save_obj.to_json # creates json data
     file = File.open("save_games.json", "w")
-    file.puts save_data
+    file.puts save_data # writes json data into opened file
     file.close
     return "y"
   else
@@ -163,8 +163,8 @@ def game(player, secrete_word, display)
     if load_game? == "y"
       puts "LOADING GAME......................."
       retrieve_data = File.open("save_games.json", "r").readline
-      saved_data = GameSave.from_json(retrieve_data)     
-      correctness = saved_data.correctness
+      saved_data = GameSave.from_json(retrieve_data)# reconverts json data to a ruby list and saves it as an attribute of the GameSave class    
+      correctness = saved_data.correctness # accessing attributes
       secrete_word = saved_data.secrete_word
       count = saved_data.count
       puts "YOU ARE LEFT WITH #{15 - count} CHANCES AND THE CORRECTNESS OF YOUR GUESS IS '#{correctness}'"
