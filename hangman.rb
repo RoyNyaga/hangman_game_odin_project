@@ -209,7 +209,6 @@ def hangman
   players_name = gets.chomp
   player = Player.new(players_name)
   secrete_word = select_word
-  puts secrete_word
   display = Display.new(players_name, secrete_word, 15)
   display.instructions
   game(player, secrete_word, display)

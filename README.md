@@ -1,0 +1,1 @@
+This project has all the features of a real life hangman game. The computer chooses a word which you will have 15 chances to guess the secrete word. After every guess session, the computer gives you feedback on whether the letter guessed is in the secrete word or not. There is also an option to save or load a previousely saved game.
